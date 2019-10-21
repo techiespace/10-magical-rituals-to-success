@@ -1,34 +1,53 @@
 package com.techiespace.projects.tenmagicalritualstosuccess
 
 import android.animation.ArgbEvaluator
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager.widget.ViewPager
-
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var viewPager: ViewPager
     private lateinit var adapter: Adapter
     var argbEvaluator = ArgbEvaluator()
+    private lateinit var wordViewModel: RitualsViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val models = listOf<Model>(
-            Model(R.drawable.brochure, "Believe", "Dream big and give give it everything you got."),
-            Model(
+        val tasklistButton = findViewById<Button>(R.id.btnTasklist)
+        tasklistButton.setOnClickListener {
+            this.startActivity(
+                Intent(
+                    this,
+                    TasklistActivity::class.java
+                )
+            )
+        }
+
+        val mainCards = listOf(
+            MainCard(
+                R.drawable.brochure,
+                "Believe",
+                "Dream big and give give it everything you got."
+            ),
+            MainCard(
                 R.drawable.sticker,
                 "Faith",
                 "Faith is the fire that fuels the dream, that powers the engine that turns the world."
             ),
-            Model(R.drawable.poster, "Plan", "Make a damn schedule"),
-            Model(R.drawable.namecard, "Action", "What gets you out of bed everyday")
+            MainCard(R.drawable.poster, "Plan", "Make a damn schedule"),
+            MainCard(R.drawable.namecard, "Action", "What gets you out of bed everyday"),
+            MainCard(R.drawable.namecard, "Reflect", "How was it? What could you have done better?")
         )
 
-        adapter = Adapter(models, this)
+        wordViewModel = ViewModelProvider(this).get(RitualsViewModel::class.java)
+
+        adapter = Adapter(mainCards, this)
         viewPager = findViewById(R.id.viewPager)
         viewPager.adapter = adapter
         viewPager.setPadding(130, 0, 130, 0)
