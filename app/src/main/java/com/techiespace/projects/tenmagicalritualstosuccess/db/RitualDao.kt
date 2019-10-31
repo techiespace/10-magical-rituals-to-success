@@ -12,6 +12,9 @@ interface RitualDao {
     @Query("SELECT * from rituals ORDER BY ritual_id ASC")
     fun getAlphabetizedWords(): LiveData<List<Ritual>>
 
+    @Query("SELECT ritual_id from rituals WHERE locked = 1")
+    fun getLockedRituals(): LiveData<List<Int>>
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(ritual: Ritual)
 

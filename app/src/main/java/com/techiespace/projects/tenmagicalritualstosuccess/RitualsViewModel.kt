@@ -12,16 +12,18 @@ import kotlinx.coroutines.launch
 class RitualsViewModel(application: Application) : AndroidViewModel(application) {
 
     // The ViewModel maintains a reference to the repository to get data.
-    private val repository: WordRepository
+    private val repository: RitualRepository
     // LiveData gives us updated words when they change.
     val allWords: LiveData<List<Ritual>>
+    val lockedRituals: LiveData<List<Int>>
 
     init {
         // Gets reference to WordDao from WordRoomDatabase to construct
         // the correct WordRepository.
         val wordsDao = RitualDatabase.getDatabase(application, viewModelScope).ritualDao()
-        repository = WordRepository(wordsDao)
+        repository = RitualRepository(wordsDao)
         allWords = repository.allWords
+        lockedRituals = repository.lockedRituals
     }
 
     /**

@@ -9,5 +9,7 @@ data class Habit(
     @PrimaryKey @ColumnInfo(name = "ritual_id") val habit_id: Int,
     @ColumnInfo(name = "habit_id") val ritual_id: Int,
     @ColumnInfo(name = "title") val title: String,
-    @ColumnInfo(name = "desc") val desc: String
+    @ColumnInfo(name = "desc") val desc: String,
+    @ColumnInfo(name = "timestamps") var timestamps: String,
+    @ColumnInfo(name = "done") var done: Boolean
 )

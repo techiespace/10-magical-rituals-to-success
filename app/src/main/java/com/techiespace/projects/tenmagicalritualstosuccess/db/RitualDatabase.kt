@@ -41,8 +41,8 @@ abstract class RitualDatabase : RoomDatabase() {
             private val scope: CoroutineScope
         ) : RoomDatabase.Callback() {
 
-            override fun onOpen(db: SupportSQLiteDatabase) {
-                super.onOpen(db)
+            override fun onCreate(db: SupportSQLiteDatabase) {
+                super.onCreate(db)
                 INSTANCE?.let { database ->
                     scope.launch(Dispatchers.IO) {
                         populateDatabase(database.ritualDao(), database.habitDao())
@@ -74,9 +74,26 @@ abstract class RitualDatabase : RoomDatabase() {
                     "Faith is the fire that fuels the dream, that powers the engine that turns the world.",
                     "B3"
                 ),
-                Ritual(3, true, "Plan", "Make a damn schedule", "C3"),
-                Ritual(4, true, "Action", "What gets you out of bed everyday", "C3"),
-                Ritual(5, true, "Reflect", "How was it? What could you have done better?", "C3")
+                Ritual(
+                    3,
+                    true,
+                    "Plan",
+                    "Make a damn schedule", "C3"
+                ),
+                Ritual(
+                    4,
+                    true,
+                    "Action",
+                    "What gets you out of bed everyday",
+                    "C3"
+                ),
+                Ritual(
+                    5,
+                    true,
+                    "Reflect",
+                    "How was it? What could you have done better?",
+                    "C3"
+                )
             )
             ritualDao.insertMany(rituals)
 
@@ -86,17 +103,21 @@ abstract class RitualDatabase : RoomDatabase() {
                     1,
                     1,
                     "Believe / Visualize",
-                    "Dream big and give give it everything you got."
+                    "Dream big and give give it everything you got.",
+                    "",
+                    false
                 ),
                 Habit(
                     2,
                     2,
                     "Faith",
-                    "Faith is the fire that fuels the dream, that powers the engine that turns the world."
+                    "Faith is the fire that fuels the dream, that powers the engine that turns the world.",
+                    "",
+                    false
                 ),
-                Habit(3, 3, "Plan", "Make a damn schedule"),
-                Habit(4, 4, "Action", "What gets you out of bed everyday"),
-                Habit(5, 5, "Reflect", "How was it? What could you have done better?")
+                Habit(3, 3, "Plan", "Make a damn schedule", "", false),
+                Habit(4, 4, "Action", "What gets you out of bed everyday", "", false),
+                Habit(5, 5, "Reflect", "How was it? What could you have done better?", "", false)
             )
             habitDao.insertMany(habits)
         }
