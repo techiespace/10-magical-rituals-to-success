@@ -3,6 +3,7 @@ package com.techiespace.projects.tenmagicalritualstosuccess
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -89,7 +90,7 @@ class TasklistActivity : AppCompatActivity() {
                     }
                 }
 //                ritualTodos.let { it1 -> adapter2.setTodos(it1) }
-                adapter.setTodos(todos)
+                adapter.setTodos(ritualTodos)
                 adapter2.setTodos(ritualTodos2)
                 adapter3.setTodos(ritualTodos3)
                 adapter4.setTodos(ritualTodos4)
@@ -105,7 +106,7 @@ class TasklistActivity : AppCompatActivity() {
         todoViewModel.lockedRituals.observe(this, Observer { lockedRituals ->
             lockedRituals?.let {
                 for (ritual in lockedRituals) {
-                    /*when (ritual){
+                    when (ritual) {
                         2 -> cv2.isVisible = false
                         3 -> cv3.isVisible = false
                         4 -> cv4.isVisible = false
@@ -116,7 +117,7 @@ class TasklistActivity : AppCompatActivity() {
                         9 -> cv9.isVisible = false
                         10 -> cv10.isVisible = false
                         else -> true
-                    }*/
+                    }
                 }
                 adapter.updateRituals()
             }

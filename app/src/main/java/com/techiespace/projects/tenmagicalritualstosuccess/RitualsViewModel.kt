@@ -16,6 +16,7 @@ class RitualsViewModel(application: Application) : AndroidViewModel(application)
     // LiveData gives us updated words when they change.
     val allWords: LiveData<List<Ritual>>
     val lockedRituals: LiveData<List<Int>>
+    val activeRitualIds: LiveData<List<Int>>
 
     init {
         // Gets reference to WordDao from WordRoomDatabase to construct
@@ -24,6 +25,7 @@ class RitualsViewModel(application: Application) : AndroidViewModel(application)
         repository = RitualRepository(wordsDao)
         allWords = repository.allWords
         lockedRituals = repository.lockedRituals
+        activeRitualIds = repository.activeRitualIds
     }
 
     /**
@@ -35,5 +37,9 @@ class RitualsViewModel(application: Application) : AndroidViewModel(application)
      */
     fun insert(word: Ritual) = viewModelScope.launch {
         repository.insert(word)
+    }
+
+    fun unlock(ritual_id: Int) = viewModelScope.launch {
+        repository.unlock(ritual_id)
     }
 }

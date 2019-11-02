@@ -15,6 +15,9 @@ interface HabitDao {
     @Query("SELECT * from habits ORDER BY habit_id ASC")
     fun getAlphabetizedWords(): LiveData<List<Habit>>
 
+    @Query("SELECT * from habits WHERE ritual_id = :ritual_id")
+    fun getHabitsByRituals(ritual_id: Int): List<Habit>
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(habit: Habit)
 

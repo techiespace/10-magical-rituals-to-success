@@ -4,6 +4,7 @@ import android.animation.ArgbEvaluator
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -18,6 +19,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var adapter: Adapter
     var argbEvaluator = ArgbEvaluator()
     private lateinit var wordViewModel: RitualsViewModel
+    var activeRitualIds: List<Int> = mutableListOf(-1)
+    var totalActiveHabits = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,24 +36,161 @@ class MainActivity : AppCompatActivity() {
             )
         }
 
-        val mainCards = listOf(
-            MainCard(
-                R.drawable.brochure,
-                "Believe",
-                "Dream big and give give it everything you got."
-            ),
-            MainCard(
-                R.drawable.sticker,
-                "Faith",
-                "Faith is the fire that fuels the dream, that powers the engine that turns the world."
-            ),
-            MainCard(R.drawable.poster, "Plan", "Make a damn schedule"),
-            MainCard(R.drawable.namecard, "Action", "What gets you out of bed everyday"),
-            MainCard(R.drawable.namecard, "Reflect", "How was it? What could you have done better?")
+        var mainCards = mutableListOf(
+            MainCard(R.drawable.ritual1, "", ""),
+            MainCard(R.drawable.lock, "", ""),
+            MainCard(R.drawable.lock, "", ""),
+            MainCard(R.drawable.lock, "", ""),
+            MainCard(R.drawable.lock, "", ""),
+            MainCard(R.drawable.lock, "", ""),
+            MainCard(R.drawable.lock, "", ""),
+            MainCard(R.drawable.lock, "", ""),
+            MainCard(R.drawable.lock, "", ""),
+            MainCard(R.drawable.lock, "", "")
         )
 
         wordViewModel = ViewModelProvider(this).get(RitualsViewModel::class.java)
         val todoViewModel = ViewModelProviders.of(this).get(HabitsViewModel::class.java)
+
+        activeRitualIds = listOf(1)
+        wordViewModel.activeRitualIds.observe(
+            this,
+            androidx.lifecycle.Observer { activeRitualIdsLocal ->
+                activeRitualIds = activeRitualIdsLocal
+            })
+        //TODO: Delete timestamps older than 20 days/ one month
+        val cal = Calendar.getInstance()
+        var consistentDates: String = ""
+
+        for (i in 1..13) {
+            cal.add(Calendar.DATE, -1)
+            consistentDates += cal.get(Calendar.DATE).toString()
+        }
+        todoViewModel.todos.observe(this, androidx.lifecycle.Observer { allHabits ->
+            totalActiveHabits = 0
+            Log.e("all Habits", allHabits.toString())
+            Log.e("active Rituals", activeRitualIds.toString())
+            for (ritual_id in activeRitualIds) {
+                for (habit in allHabits) {
+                    if (ritual_id == habit.ritual_id) {
+                        totalActiveHabits++
+                    }
+                }
+            }
+            displayCalendar(todoViewModel, totalActiveHabits)
+            var consistencyCount1: Int = 0
+            var consistencyCount2: Int = 0
+            var consistencyCount3: Int = 0
+            var consistencyCount4: Int = 0
+            var consistencyCount5: Int = 0
+            var consistencyCount6: Int = 0
+            var consistencyCount7: Int = 0
+            var consistencyCount8: Int = 0
+            var consistencyCount9: Int = 0
+            for (habit in allHabits) {
+                if (habit.ritual_id == 1) {//if all habits with ritual_id 1 are followed for past 7 days, unlock next ritual
+                    if (consistentDates in habit.timestamps) {
+                        consistencyCount1++
+                    }
+                }
+                if (habit.ritual_id == 2) {
+                    if (consistentDates in habit.timestamps) {
+                        consistencyCount2++
+                    }
+                }
+                if (habit.ritual_id == 3) {
+                    if (consistentDates in habit.timestamps) {
+                        consistencyCount3++
+                    }
+                }
+                if (habit.ritual_id == 4) {
+                    if (consistentDates in habit.timestamps) {
+                        consistencyCount4++
+                    }
+                }
+                if (habit.ritual_id == 5) {
+                    if (consistentDates in habit.timestamps) {
+                        consistencyCount5++
+                    }
+                }
+                if (habit.ritual_id == 6) {
+                    if (consistentDates in habit.timestamps) {
+                        consistencyCount6++
+                    }
+                }
+                if (habit.ritual_id == 7) {
+                    if (consistentDates in habit.timestamps) {
+                        consistencyCount7++
+                    }
+                }
+                if (habit.ritual_id == 8) {
+                    if (consistentDates in habit.timestamps) {
+                        consistencyCount8++
+                    }
+                }
+                if (habit.ritual_id == 9) {
+                    if (consistentDates in habit.timestamps) {
+                        consistencyCount9++
+                    }
+                }
+                if (consistencyCount1 == 14 && habit.ritual_id == 1)
+                    wordViewModel.unlock(habit.ritual_id + 1)
+                if (consistencyCount2 == 14 && habit.ritual_id == 2)
+                    wordViewModel.unlock(habit.ritual_id + 1)
+                if (consistencyCount3 == 14 && habit.ritual_id == 3)
+                    wordViewModel.unlock(habit.ritual_id + 1)
+                if (consistencyCount4 == 14 && habit.ritual_id == 4)
+                    wordViewModel.unlock(habit.ritual_id + 1)
+                if (consistencyCount5 == 14 && habit.ritual_id == 5)
+                    wordViewModel.unlock(habit.ritual_id + 1)
+                if (consistencyCount6 == 14 && habit.ritual_id == 6)
+                    wordViewModel.unlock(habit.ritual_id + 1)
+                if (consistencyCount7 == 14 && habit.ritual_id == 7)
+                    wordViewModel.unlock(habit.ritual_id + 1)
+                if (consistencyCount8 == 14 && habit.ritual_id == 8)
+                    wordViewModel.unlock(habit.ritual_id + 1)
+                if (consistencyCount9 == 14 && habit.ritual_id == 9)
+                    wordViewModel.unlock(habit.ritual_id + 1)
+            }
+        })
+
+        wordViewModel.allWords.observe(this, androidx.lifecycle.Observer { allWords ->
+            for (i in allWords.indices) { //size should be always 10
+                if (allWords[i].locked)
+                    mainCards[i] = MainCard(
+                        R.drawable.lock,
+                        "Follow the previous ritual for a week to unlock this secret",
+                        ""
+                    )
+            }
+            if (allWords.size == 10) {
+                if (!allWords[0].locked)
+                    mainCards[0] = MainCard(R.drawable.ritual1, allWords[0].title, allWords[0].desc)
+                if (!allWords[1].locked)
+                    mainCards[1] = MainCard(R.drawable.ritual2, allWords[1].title, allWords[1].desc)
+                if (!allWords[2].locked)
+                    mainCards[2] = MainCard(R.drawable.ritual3, allWords[2].title, allWords[2].desc)
+                if (!allWords[3].locked)
+                    mainCards[3] = MainCard(R.drawable.ritual4, allWords[3].title, allWords[3].desc)
+                if (!allWords[4].locked)
+                    mainCards[4] = MainCard(R.drawable.ritual5, allWords[4].title, allWords[4].desc)
+                if (!allWords[5].locked)
+                    mainCards[5] = MainCard(R.drawable.ritual6, allWords[5].title, allWords[5].desc)
+                if (!allWords[6].locked)
+                    mainCards[6] = MainCard(R.drawable.ritual7, allWords[6].title, allWords[6].desc)
+                if (!allWords[7].locked)
+                    mainCards[7] = MainCard(R.drawable.ritual8, allWords[7].title, allWords[7].desc)
+                if (!allWords[8].locked)
+                    mainCards[8] = MainCard(R.drawable.ritual9, allWords[8].title, allWords[8].desc)
+                if (!allWords[9].locked)
+                    mainCards[9] =
+                        MainCard(R.drawable.ritual10, allWords[9].title, allWords[9].desc)
+            }
+            adapter = Adapter(mainCards, this)
+            viewPager = findViewById(R.id.viewPager)
+            viewPager.adapter = adapter
+            viewPager.setPadding(130, 0, 130, 0)
+        })
 
         adapter = Adapter(mainCards, this)
         viewPager = findViewById(R.id.viewPager)
@@ -91,10 +231,10 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        displayCalendar(todoViewModel)
+        displayCalendar(todoViewModel, totalActiveHabits)
     }
 
-    private fun displayCalendar(todoViewModel: HabitsViewModel) {
+    private fun displayCalendar(todoViewModel: HabitsViewModel, totalActiveHabits: Int) {
         val calendar = Calendar.getInstance()
         today.text = calendar.get(Calendar.DATE).toString()
         calendar.add(Calendar.DATE, -1)
@@ -131,7 +271,7 @@ class MainActivity : AppCompatActivity() {
         var complete_date = "$date $month $year"
         todoViewModel.todos.observe(this, androidx.lifecycle.Observer { todos ->
             todos?.let {
-                val totalCount: Int = todos.size
+                val totalCount: Int = if (totalActiveHabits == 0) todos.size else totalActiveHabits
                 var todayCount = 0
                 var todayCountMin1 = 0
                 var todayCountMin2 = 0

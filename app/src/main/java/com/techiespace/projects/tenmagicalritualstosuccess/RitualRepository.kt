@@ -14,7 +14,13 @@ class RitualRepository(private val wordDao: RitualDao) {
 
     val lockedRituals: LiveData<List<Int>> = wordDao.getLockedRituals()
 
+    val activeRitualIds: LiveData<List<Int>> = wordDao.getActiveRitualIds()
+
     suspend fun insert(word: Ritual) {
         wordDao.insert(word)
+    }
+
+    suspend fun unlock(ritualId: Int) {
+        wordDao.unlock(ritualId)
     }
 }

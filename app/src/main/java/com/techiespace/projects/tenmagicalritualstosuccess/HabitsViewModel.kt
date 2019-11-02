@@ -44,18 +44,11 @@ class HabitsViewModel(application: Application) : AndroidViewModel(application) 
 
     fun toggleDone(todo: Habit, checked: Boolean) = scope.launch(Dispatchers.IO) {
         //TODO: Handle cases for 2021 when no separator might cause a problem
-
-//        if(checked){
         if (complete_date !in todo.timestamps) {
             todo.timestamps = todo.timestamps + complete_date
         } else
             todo.timestamps = todo.timestamps.replace(complete_date, "").trim()
-//            todo.done = checked
-//            todo.habit_id = "1"
         todoRepository.update(todo)
-//            Log.e("triggered","checked")
-//        }
-//        Log.e("testing",todoRepository.allWords)
     }
 
     override fun onCleared() {
