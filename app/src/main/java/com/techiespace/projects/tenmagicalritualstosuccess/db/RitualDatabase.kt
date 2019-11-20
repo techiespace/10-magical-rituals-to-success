@@ -58,7 +58,7 @@ abstract class RitualDatabase : RoomDatabase() {
             // Delete all content here.
             ritualDao.deleteAll()
 
-            // Add sample words.
+            // Add sample rituals.
             val rituals = listOf(
                 Ritual(
                     1,

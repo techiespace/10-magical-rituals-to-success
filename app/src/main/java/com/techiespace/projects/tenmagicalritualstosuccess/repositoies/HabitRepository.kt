@@ -1,4 +1,4 @@
-package com.techiespace.projects.tenmagicalritualstosuccess
+package com.techiespace.projects.tenmagicalritualstosuccess.repositoies
 
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
@@ -9,18 +9,19 @@ class HabitRepository(private val habitDao: HabitDao) {
 
     // Room executes all queries on a separate thread.
     // Observed LiveData will notify the observer when the data has changed.
-    val allWords: LiveData<List<Habit>> = habitDao.getAlphabetizedWords()
-
-    suspend fun insert(word: Habit) {
-        habitDao.insert(word)
-    }
+    val allHabits: LiveData<List<Habit>> = habitDao.getAllHabits()
 
     @WorkerThread
     suspend fun update(todo: Habit) {
         habitDao.update(todo)
     }
 
-    suspend fun getHabitsByRitual(ritual_id: Int) {
-        habitDao.getHabitsByRituals(ritual_id)
+    suspend fun dummyHabitToggle() {
+        habitDao.dummyHabitToggle()
     }
+
+    suspend fun getActiveHabitsCount(ritualId: Int): Int {
+        return habitDao.getActiveHabitsCount(ritualId)
+    }
+
 }

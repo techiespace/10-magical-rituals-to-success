@@ -10,7 +10,7 @@ import androidx.room.Query
 interface RitualDao {
 
     @Query("SELECT * from rituals ORDER BY ritual_id ASC")
-    fun getAlphabetizedWords(): LiveData<List<Ritual>>
+    fun getAllRituals(): LiveData<List<Ritual>>
 
     @Query("SELECT ritual_id from rituals WHERE locked = 1")
     fun getLockedRituals(): LiveData<List<Int>>

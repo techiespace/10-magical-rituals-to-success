@@ -10,33 +10,33 @@ import com.techiespace.projects.tenmagicalritualstosuccess.db.Habit
 import kotlinx.android.synthetic.main.tasklist_item.view.*
 import java.util.*
 
-class TodoRecyclerAdapter(context: Context, val onClick: (Habit, Boolean) -> Unit) :
-    RecyclerView.Adapter<TodoRecyclerAdapter.TodoViewHolder>() {
+class HabitRecyclerAdapter(context: Context, val onClick: (Habit, Boolean) -> Unit) :
+    RecyclerView.Adapter<HabitRecyclerAdapter.TodoViewHolder>() {
 
     private val inflater = LayoutInflater.from(context)
-    private var todos = emptyList<Habit>()
-    val calendar = Calendar.getInstance()
-    val date = calendar.get(Calendar.DATE)
-    val month = calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())
-    val year = calendar.get(Calendar.YEAR)
-    val complete_date = "$date $month $year"
+    private var habits = emptyList<Habit>()
+    private val calendar = Calendar.getInstance()
+    private val date = calendar.get(Calendar.DATE)
+    private val month = calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())
+    private val year = calendar.get(Calendar.YEAR)
+    val completeDate = "$date $month $year"
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TodoViewHolder {
         val itemView = inflater.inflate(R.layout.tasklist_item, parent, false)
         return TodoViewHolder(itemView)
     }
 
-    override fun getItemCount() = todos.size
+    override fun getItemCount() = habits.size
 
     override fun onBindViewHolder(holder: TodoViewHolder, position: Int) {
-        holder.bindTodo(todos[position])
+        holder.bindTodo(habits[position])
         holder.itemView.cbDone.setOnClickListener {
-            onClick(todos[position], (it as CompoundButton).isChecked)
+            onClick(habits[position], (it as CompoundButton).isChecked)
         }
     }
 
     fun setTodos(todos: List<Habit>) {
-        this.todos = todos
+        this.habits = todos
         notifyDataSetChanged()
     }
 
@@ -48,9 +48,9 @@ class TodoRecyclerAdapter(context: Context, val onClick: (Habit, Boolean) -> Uni
     inner class TodoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bindTodo(todo: Habit) {
             with(todo) {
-                itemView.tvTodo.text = title
-                itemView.cbDone.isChecked = complete_date in timestamps
-//                itemView.cbDone.isChecked = done
+                itemView.textViewHabit.text = title
+                itemView.cbDone.isChecked =
+                    completeDate in timestamps.split("|")   //this might break if complete date is empty string due to the extra empty string generated because of trailing |
             }
         }
 

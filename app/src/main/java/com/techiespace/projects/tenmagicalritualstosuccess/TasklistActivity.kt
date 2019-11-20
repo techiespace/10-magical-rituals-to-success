@@ -8,6 +8,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.techiespace.projects.tenmagicalritualstosuccess.db.Habit
+import com.techiespace.projects.tenmagicalritualstosuccess.viewmodels.HabitsViewModel
 import kotlinx.android.synthetic.main.activity_tasklist.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -125,9 +126,9 @@ class TasklistActivity : AppCompatActivity() {
     }
 
 
-    private fun todoRecyclerAdapter1(): TodoRecyclerAdapter {
+    private fun todoRecyclerAdapter1(): HabitRecyclerAdapter {
         val recyclerView = rvTodos
-        val adapter = TodoRecyclerAdapter(this) { todo, done ->
+        val adapter = HabitRecyclerAdapter(this) { todo, done ->
             todoViewModel.toggleDone(todo, done)
         }
         recyclerView.adapter = adapter
@@ -135,9 +136,9 @@ class TasklistActivity : AppCompatActivity() {
         return adapter
     }
 
-    private fun todoRecyclerAdapter2(): TodoRecyclerAdapter {
+    private fun todoRecyclerAdapter2(): HabitRecyclerAdapter {
         val recyclerView2 = rvTodos2
-        val adapter2 = TodoRecyclerAdapter(this) { todo, done ->
+        val adapter2 = HabitRecyclerAdapter(this) { todo, done ->
             todoViewModel.toggleDone(todo, done)
         }
         recyclerView2.adapter = adapter2
@@ -145,9 +146,9 @@ class TasklistActivity : AppCompatActivity() {
         return adapter2
     }
 
-    private fun todoRecyclerAdapter3(): TodoRecyclerAdapter {
+    private fun todoRecyclerAdapter3(): HabitRecyclerAdapter {
         val recyclerView3 = rvTodos3
-        val adapter3 = TodoRecyclerAdapter(this) { todo, done ->
+        val adapter3 = HabitRecyclerAdapter(this) { todo, done ->
             todoViewModel.toggleDone(todo, done)
         }
         recyclerView3.adapter = adapter3
@@ -155,9 +156,9 @@ class TasklistActivity : AppCompatActivity() {
         return adapter3
     }
 
-    private fun todoRecyclerAdapter4(): TodoRecyclerAdapter {
+    private fun todoRecyclerAdapter4(): HabitRecyclerAdapter {
         val recyclerView4 = rvTodos4
-        val adapter4 = TodoRecyclerAdapter(this) { todo, done ->
+        val adapter4 = HabitRecyclerAdapter(this) { todo, done ->
             todoViewModel.toggleDone(todo, done)
         }
         recyclerView4.adapter = adapter4
@@ -165,9 +166,9 @@ class TasklistActivity : AppCompatActivity() {
         return adapter4
     }
 
-    private fun todoRecyclerAdapter5(): TodoRecyclerAdapter {
+    private fun todoRecyclerAdapter5(): HabitRecyclerAdapter {
         val recyclerView5 = rvTodos5
-        val adapter5 = TodoRecyclerAdapter(this) { todo, done ->
+        val adapter5 = HabitRecyclerAdapter(this) { todo, done ->
             todoViewModel.toggleDone(todo, done)
         }
         recyclerView5.adapter = adapter5
@@ -175,9 +176,9 @@ class TasklistActivity : AppCompatActivity() {
         return adapter5
     }
 
-    private fun todoRecyclerAdapter6(): TodoRecyclerAdapter {
+    private fun todoRecyclerAdapter6(): HabitRecyclerAdapter {
         val recyclerView6 = rvTodos6
-        val adapter6 = TodoRecyclerAdapter(this) { todo, done ->
+        val adapter6 = HabitRecyclerAdapter(this) { todo, done ->
             todoViewModel.toggleDone(todo, done)
         }
         recyclerView6.adapter = adapter6
@@ -185,9 +186,9 @@ class TasklistActivity : AppCompatActivity() {
         return adapter6
     }
 
-    private fun todoRecyclerAdapter7(): TodoRecyclerAdapter {
+    private fun todoRecyclerAdapter7(): HabitRecyclerAdapter {
         val recyclerView7 = rvTodos7
-        val adapter7 = TodoRecyclerAdapter(this) { todo, done ->
+        val adapter7 = HabitRecyclerAdapter(this) { todo, done ->
             todoViewModel.toggleDone(todo, done)
         }
         recyclerView7.adapter = adapter7
@@ -195,9 +196,9 @@ class TasklistActivity : AppCompatActivity() {
         return adapter7
     }
 
-    private fun todoRecyclerAdapter8(): TodoRecyclerAdapter {
+    private fun todoRecyclerAdapter8(): HabitRecyclerAdapter {
         val recyclerView8 = rvTodos8
-        val adapter8 = TodoRecyclerAdapter(this) { todo, done ->
+        val adapter8 = HabitRecyclerAdapter(this) { todo, done ->
             todoViewModel.toggleDone(todo, done)
         }
         recyclerView8.adapter = adapter8
@@ -205,9 +206,9 @@ class TasklistActivity : AppCompatActivity() {
         return adapter8
     }
 
-    private fun todoRecyclerAdapter9(): TodoRecyclerAdapter {
+    private fun todoRecyclerAdapter9(): HabitRecyclerAdapter {
         val recyclerView9 = rvTodos9
-        val adapter9 = TodoRecyclerAdapter(this) { todo, done ->
+        val adapter9 = HabitRecyclerAdapter(this) { todo, done ->
             todoViewModel.toggleDone(todo, done)
         }
         recyclerView9.adapter = adapter9
@@ -215,9 +216,9 @@ class TasklistActivity : AppCompatActivity() {
         return adapter9
     }
 
-    private fun todoRecyclerAdapter10(): TodoRecyclerAdapter {
+    private fun todoRecyclerAdapter10(): HabitRecyclerAdapter {
         val recyclerView10 = rvTodos10
-        val adapter10 = TodoRecyclerAdapter(this) { todo, done ->
+        val adapter10 = HabitRecyclerAdapter(this) { todo, done ->
             todoViewModel.toggleDone(todo, done)
         }
         recyclerView10.adapter = adapter10
